@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows 10 Master Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --electrolux-blue: #0066cc;
+            --cyber-blue: #00d4ff;
+            --dark-blue: #001a33;
+            --light-blue: #4da6ff;
+            --neon-green: #00ff88;
+            --dark-bg: #0a0a0a;
+            --card-bg: rgba(0, 102, 204, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #b3d9ff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-blue) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 102, 204, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 26, 51, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 2px solid var(--electrolux-blue);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--cyber-blue);
+            text-shadow: 0 0 10px var(--cyber-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 15px var(--cyber-blue);
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyber-blue);
+            text-shadow: 0 0 5px var(--cyber-blue);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--cyber-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main content */
+        main {
+            margin-top: 80px;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(45deg, rgba(0, 102, 204, 0.1), rgba(0, 212, 255, 0.1));
+            border-radius: 20px;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--cyber-blue), var(--electrolux-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hero h1:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes glow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.2); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--electrolux-blue), var(--cyber-blue));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--electrolux-blue), var(--cyber-blue));
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
+            border-color: var(--cyber-blue);
+        }
+
+        .card h3 {
+            color: var(--cyber-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .card-content {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .card.active .card-content {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .expand-btn {
+            background: linear-gradient(45deg, var(--electrolux-blue), var(--cyber-blue));
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .expand-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Steps */
+        .steps {
+            margin: 2rem 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(0, 102, 204, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid var(--cyber-blue);
+        }
+
+        .step-number {
+            background: var(--electrolux-blue);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: var(--cyber-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Video placeholders */
+        .video-container {
+            width: 100%;
+            margin: 1rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            background: linear-gradient(45deg, var(--electrolux-blue), var(--cyber-blue));
+            border-radius: 8px;
+            border: 2px solid var(--cyber-blue);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hamburger::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .hamburger:hover::before {
+            left: 100%;
+        }
+
+        .hamburger:hover {
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            box-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+            box-shadow: 0 0 10px var(--cyber-blue);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+            box-shadow: 0 0 10px var(--cyber-blue);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-blue) 100%);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            padding-top: 80px;
+            border-right: 2px solid var(--electrolux-blue);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 2rem;
+        }
+
+        .mobile-menu li {
+            margin: 1.5rem 0;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .mobile-menu.active li:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active li:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-menu.active li:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-menu.active li:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-menu.active li:nth-child(5) { transition-delay: 0.5s; }
+        .mobile-menu.active li:nth-child(6) { transition-delay: 0.6s; }
+        .mobile-menu.active li:nth-child(7) { transition-delay: 0.7s; }
+
+        .mobile-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mobile-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .mobile-menu a:hover::before {
+            left: 100%;
+        }
+
+        .mobile-menu a:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--cyber-blue);
+            text-shadow: 0 0 10px var(--cyber-blue);
+            transform: translateX(10px);
+            border-left: 4px solid var(--cyber-blue);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--electrolux-blue), var(--cyber-blue));
+            border: 2px solid var(--cyber-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(100px);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .back-to-top:hover::before {
+            opacity: 1;
+            animation: rotate 2s linear infinite;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.5);
+        }
+
+        .back-to-top::after {
+            content: '⬆️';
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        .back-to-top:hover::after {
+            animation: bounce 0.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+            60% { transform: translateY(-3px); }
+        }
+
+        /* Cyber Glitch Effect for Back to Top */
+        .back-to-top.glitch {
+            animation: glitch 0.3s ease-in-out;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav {
+                padding: 1rem;
+            }
+            
+            .back-to-top {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .back-to-top::after {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mobile-menu {
+                width: 100%;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--electrolux-blue);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cyber-blue);
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--cyber-blue);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--electrolux-blue);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            color: var(--neon-green);
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--cyber-blue);
+            color: var(--text-primary);
+        }
+
+        .alert-warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-color: #ffc107;
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg"></div>
+    
+    <header>
+        <nav>
+            <div class="logo" onclick="scrollToTop()">Windows 10 Master Guide</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#installazione">Installazione</a></li>
+                <li><a href="#account">Account</a></li>
+                <li><a href="#office">Office</a></li>
+                <li><a href="#backup">Backup</a></li>
+                <li><a href="#ripristino">Ripristino</a></li>
+                <li><a href="#rete">Rete</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="#home" onclick="closeMobileMenu()">🏠 Home</a></li>
+            <li><a href="#installazione" onclick="closeMobileMenu()">🚀 Installazione</a></li>
+            <li><a href="#account" onclick="closeMobileMenu()">👤 Account</a></li>
+            <li><a href="#office" onclick="closeMobileMenu()">📊 Office</a></li>
+            <li><a href="#backup" onclick="closeMobileMenu()">💾 Backup</a></li>
+            <li><a href="#ripristino" onclick="closeMobileMenu()">🔄 Ripristino</a></li>
+            <li><a href="#rete" onclick="closeMobileMenu()">🌐 Rete</a></li>
+        </ul>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" onclick="scrollToTop()"></div>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 onclick="scrollToTop()">Windows 10 Master Guide</h1>
+                <p>La guida completa per padroneggiare Windows</p>
+                <a href="#installazione" class="cta-button">Inizia il Viaggio</a>
+            </div>
+        </section>
+
+        <div class="cards-grid">
+            <!-- Traccia 1: Installazione Windows 10 -->
+            <div class="card" id="installazione">
+                <h3>🚀 Installazione di Windows 10</h3>
+                <p>Guida completa per l'installazione pulita di Windows 10 con tutti i passaggi dettagliati.</p>
+                <button class="expand-btn" onclick="toggleCard(this)">Espandi Guida</button>
+                
+                <div class="card-content">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/0jjqdtNncok" title="Installazione di Windows 10" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <h4>Requisiti di Sistema</h4>
+                    <div class="code-block">
+                        Processore: 1 GHz o superiore
+                        RAM: 1 GB (32-bit) o 2 GB (64-bit)
+                        Spazio disco: 16 GB (32-bit) o 20 GB (64-bit)
+                        Scheda grafica: DirectX 9 compatibile
+                    </div>
+                    
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Preparazione USB di installazione</h4>
+                                <p>Scarica il Media Creation Tool da Microsoft e crea una chiavetta USB bootable.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Configurazione BIOS/UEFI</h4>
+                                <p>Accedi al BIOS/UEFI premendo F2, F12 o Canc durante l'avvio e imposta l'USB come primo dispositivo di boot.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Avvio installazione</h4>
+                                <p>Avvia dal supporto USB e segui la procedura guidata di installazione.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Partizionamento disco</h4>
+                                <p>Scegli dove installare Windows 10, crea o seleziona la partizione desiderata.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Configurazione iniziale</h4>
+                                <p>Completa la configurazione iniziale con account, privacy e aggiornamenti.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <strong>💡 Consiglio:</strong> Fai sempre un backup dei tuoi dati prima di procedere con l'installazione!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traccia 2: Account Utente -->
+            <div class="card" id="account">
+                <h3>👤 Creazione e Configurazione Account Utente</h3>
+                <p>Gestione completa degli account utente Windows con privilegi e sicurezza.</p>
+                <button class="expand-btn" onclick="toggleCard(this)">Espandi Guida</button>
+                
+                <div class="card-content">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/KeIkas8EXYY" title="Creazione Account Utente" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <h4>Tipi di Account</h4>
+                    <div class="code-block">
+                        Account Microsoft: Sincronizzazione cloud
+                        Account Locale: Solo su questo PC
+                        Account Amministratore: Privilegi completi
+                        Account Standard: Privilegi limitati
+                    </div>
+                    
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Accesso alle Impostazioni</h4>
+                                <p>Vai su Impostazioni > Account > Famiglia e altri utenti</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Creazione nuovo account</h4>
+                                <p>Clicca su "Aggiungi un altro utente a questo PC" e segui la procedura guidata.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Configurazione privilegi</h4>
+                                <p>Seleziona il tipo di account (Standard o Amministratore) e imposta le autorizzazioni.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Controllo genitori</h4>
+                                <p>Configura le restrizioni per account di minori tramite Microsoft Family.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Attenzione:</strong> Mantieni sempre almeno un account amministratore attivo!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traccia 3: Microsoft Office -->
+            <div class="card" id="office">
+                <h3>📊 Installazione e Configurazione Microsoft Office</h3>
+                <p>Setup completo della suite Office con attivazione e personalizzazione.</p>
+                <button class="expand-btn" onclick="toggleCard(this)">Espandi Guida</button>
+                
+                <div class="card-content">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/agcEerUS3n8" title="Installazione Office" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <h4>Versioni Disponibili</h4>
+                    <div class="code-block">
+                        Microsoft 365: Abbonamento cloud
+                        Office 2021: Licenza perpetua
+                        Office 2019: Versione precedente
+                        Office Online: Versione gratuita web
+                    </div>
+                    
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Download e acquisto</h4>
+                                <p>Visita office.com, scegli la versione desiderata e procedi con l'acquisto o il download.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Installazione guidata</h4>
+                                <p>Esegui il file di installazione e segui la procedura guidata.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Attivazione prodotto</h4>
+                                <p>Inserisci il codice Product Key o accedi con l'account Microsoft associato.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Configurazione iniziale</h4>
+                                <p>Personalizza le impostazioni di Office, tema, lingua e sincronizzazione cloud.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Aggiornamenti automatici</h4>
+                                <p>Configura gli aggiornamenti automatici per mantenere Office sempre aggiornato.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <strong>💡 Suggerimento:</strong> Utilizza l'account Microsoft per sincronizzare impostazioni e documenti su tutti i dispositivi!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traccia 4: Backup Completo -->
+            <div class="card" id="backup">
+                <h3>💾 Creazione di un Backup Completo</h3>
+                <p>Strategie complete per proteggere i tuoi dati con backup automatici e manuali.</p>
+                <button class="expand-btn" onclick="toggleCard(this)">Espandi Guida</button>
+                
+                <div class="card-content">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/k10SCeSnd90" title="Backup Windows" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <h4>Tipi di Backup</h4>
+                    <div class="code-block">
+                        Backup Completo: Tutti i file e cartelle
+                        Backup Incrementale: Solo modifiche recenti
+                        Backup Differenziale: Modifiche dall'ultimo completo
+                        Backup di Sistema: Immagine disco completa
+                    </div>
+                    
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Backup con Cronologia File</h4>
+                                <p>Attiva la Cronologia File di Windows per backup automatici delle cartelle utente.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Backup e Ripristino Windows 7</h4>
+                                <p>Utilizza lo strumento classico per creare un backup completo del sistema.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Creazione immagine di sistema</h4>
+                                <p>Crea un'immagine completa del disco di sistema per ripristino totale.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Backup su cloud</h4>
+                                <p>Configura OneDrive o altri servizi cloud per sincronizzazione automatica.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Programmazione backup</h4>
+                                <p>Imposta backup automatici programmati per eseguire copie regolari.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Importante:</strong> Testa sempre i tuoi backup per assicurarti che siano funzionanti!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traccia 5: Ripristino Dati -->
+            <div class="card" id="ripristino">
+                <h3>🔄 Ripristino di Dati da un Backup</h3>
+                <p>Procedure complete per recuperare dati e sistema dai backup creati.</p>
+                <button class="expand-btn" onclick="toggleCard(this)">Espandi Guida</button>
+                
+                <div class="card-content">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/YhjoI3ZPN8w" title="Ripristino del Backup" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <h4>Opzioni di Ripristino</h4>
+                    <div class="code-block">
+                        Ripristino File: Singoli file o cartelle
+                        Ripristino Parziale: Cartelle specifiche
+                        Ripristino Completo: Intero sistema
+                        Ripristino Temporale: Versioni precedenti
+                    </div>
+                    
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Ripristino da Cronologia File</h4>
+                                <p>Accedi alla Cronologia File per recuperare versioni precedenti di file e cartelle.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Ripristino selettivo</h4>
+                                <p>Scegli specifici file o cartelle da ripristinare dal backup.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Ripristino da immagine sistema</h4>
+                                <p>Utilizza l'immagine di sistema per ripristinare completamente il PC.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Ripristino da cloud</h4>
+                                <p>Recupera file sincronizzati da OneDrive o altri servizi cloud.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Verifica integrità</h4>
+                                <p>Controlla che i file ripristinati siano integri e funzionanti.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <strong>💡 Consiglio:</strong> Ripristina sempre in una posizione temporanea per verificare i dati prima di sovrascrivere!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traccia 6: Configurazione Rete -->
+            <div class="card" id="rete">
+                <h3>🌐 Configurazione di una Rete Domestica</h3>
+                <p>Setup completo della rete domestica con condivisione e sicurezza.</p>
+                <button class="expand-btn" onclick="toggleCard(this)">Espandi Guida</button>
+                
+                <div class="card-content">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/aER-KyALNeY" title="Configurazione Rete Domestica" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <h4>Tipi di Rete</h4>
+                    <div class="code-block">
+                        Rete Privata: Rete domestica o aziendale
+                        Rete Pubblica: Reti non attendibili
+                        Rete di Dominio: Reti aziendali gestite
+                        Gruppo Home: Condivisione semplificata
+                    </div>
+                    
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Configurazione connessione</h4>
+                                <p>Configura la connessione Wi-Fi o Ethernet e imposta il profilo di rete.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Impostazioni di condivisione</h4>
+                                <p>Configura le opzioni di condivisione file, stampanti e media.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Condivisione cartelle</h4>
+                                <p>Imposta cartelle condivise con permessi appropriati per altri utenti della rete.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Configurazione stampante</h4>
+                                <p>Installa e condividi stampanti di rete per tutti i dispositivi.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Sicurezza rete</h4>
+                                <p>Configura firewall, password e crittografia per proteggere la rete.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                <h4>Risoluzione problemi</h4>
+                                <p>Utilizza gli strumenti di diagnostica Windows per risolvere problemi di rete.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Sicurezza:</strong> Assicurati sempre di utilizzare password robuste e crittografia WPA3!
+                    </div>
+                    
+                    <h4>Comandi Utili</h4>
+                    <div class="code-block">
+                        ipconfig /all - Visualizza configurazione rete
+                        ping google.com - Testa connettività internet
+                        netsh wlan show profiles - Mostra profili Wi-Fi
+                        netsh int ip reset - Resetta stack TCP/IP
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione bonus con tools aggiuntivi -->
+        <section class="hero" style="margin-top: 4rem;">
+            <div class="hero-content">
+                <h2>🛠️ Tools e Risorse Aggiuntive</h2>
+                <p>Strumenti professionali per ottimizzare la tua esperienza Windows 10</p>
+                
+                <div class="cards-grid" style="margin-top: 2rem;">
+                    <div class="card">
+                        <h3>⚡ Ottimizzazione Sistema</h3>
+                        <p>Strumenti per velocizzare e ottimizzare le prestazioni di Windows 10.</p>
+                        <div class="steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Disk Cleanup</h4>
+                                    <p>Utilizza lo strumento integrato per liberare spazio su disco.</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Defragmentazione</h4>
+                                    <p>Ottimizza i dischi rigidi tradizionali per migliorare le prestazioni.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>🔒 Sicurezza Avanzata</h3>
+                        <p>Configurazioni di sicurezza per proteggere il sistema da minacce.</p>
+                        <div class="steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Windows Defender</h4>
+                                    <p>Configura l'antivirus integrato per protezione in tempo reale.</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Windows Firewall</h4>
+                                    <p>Imposta regole firewall per controllare traffico di rete.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>🎯 Personalizzazione</h3>
+                        <p>Personalizza l'interfaccia e l'esperienza utente di Windows 10.</p>
+                        <div class="steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Temi e Sfondi</h4>
+                                    <p>Personalizza l'aspetto del desktop e dei colori del sistema.</p>
+                                </div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Menu Start</h4>
+                                    <p>Personalizza tiles e layout del menu Start.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="background: rgba(0, 26, 51, 0.9); padding: 2rem; text-align: center; margin-top: 4rem; border-top: 2px solid var(--electrolux-blue);">
+        <p>&copy; 2025 Windows 10 Master Guide</p>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Guide complete per diventare un esperto di Windows</p>
+    </footer>
+
+    <script>
+        // Toggle card expansion
+        function toggleCard(button) {
+            const card = button.closest('.card');
+            card.classList.toggle('active');
+            
+            if (card.classList.contains('active')) {
+                button.textContent = 'Comprimi Guida';
+                button.style.background = 'linear-gradient(45deg, #dc3545, #ff6b6b)';
+            } else {
+                button.textContent = 'Espandi Guida';
+                button.style.background = 'linear-gradient(45deg, var(--electrolux-blue), var(--cyber-blue))';
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add cyber glitch effect to hero title
+        const heroTitle = document.querySelector('.hero h1');
+        setInterval(() => {
+            heroTitle.style.textShadow = `
+                0 0 5px var(--cyber-blue),
+                0 0 10px var(--cyber-blue),
+                0 0 15px var(--cyber-blue),
+                ${Math.random() * 5}px ${Math.random() * 5}px 0px var(--electrolux-blue)
+            `;
+            
+            setTimeout(() => {
+                heroTitle.style.textShadow = 'none';
+            }, 100);
+        }, 3000);
+
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-overlay');
+            
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        function closeMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-overlay');
+            
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Back to Top Button Functions
+        function scrollToTop() {
+            const backToTopBtn = document.querySelector('.back-to-top');
+            backToTopBtn.classList.add('glitch');
+            
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            setTimeout(() => {
+                backToTopBtn.classList.remove('glitch');
+            }, 300);
+        }
+
+        // Show/Hide Back to Top Button
+        window.addEventListener('scroll', () => {
+            const backToTopBtn = document.querySelector('.back-to-top');
+            const scrollY = window.scrollY;
+            
+            if (scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+            
+            // Existing scroll code for navigation highlighting
+            const sections = document.querySelectorAll('section, .card');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close mobile menu on window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
+        });
+
+        // Add particle effect to background
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = '2px';
+            particle.style.height = '2px';
+            particle.style.background = 'var(--cyber-blue)';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = '100%';
+            particle.style.opacity = '0.5';
+            particle.style.zIndex = '-1';
+            particle.style.pointerEvents = 'none';
+            
+            document.body.appendChild(particle);
+            
+            const animation = particle.animate([
+                { transform: 'translateY(0px)', opacity: 0.5 },
+                { transform: 'translateY(-100vh)', opacity: 0 }
+            ], {
+                duration: 3000 + Math.random() * 2000,
+                easing: 'linear'
+            });
+            
+            animation.onfinish = () => particle.remove();
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 500);
+    </script>
+</body>
+</html>
